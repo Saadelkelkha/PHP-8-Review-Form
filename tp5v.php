@@ -4,7 +4,7 @@
         <title>Le livre est d'or </title>
     </head>
     <body style="background-color: #ffcc00;">
-        <form action="tp5.php" method="post" >
+        <form action="tp5v.php" method="post" >
             <fieldset>
                 <legend><b>Donnez votre avis sur PHP 8 ! </b></legend>
                     <b> Nom :
@@ -23,27 +23,31 @@
             if(isset($_POST['env'])) {
                 if(isset($_POST['nom']) && isset($_POST['mail']) && isset($_POST['comm'])) {
                     echo "<h2>",$_POST['nom']," merci de votre avis </h2> ";
-                    if($id_file=fopen("livre2.txt","a")) {
-                    flock($id_file,2);
+                    if($id_file=fopen("livre.txt","a")) {
                     fwrite($id_file,$_POST['nom'].":".$_POST['mail'].":".$date.":".$_POST['comm']."\n");
-                    flock($id_file,3);
                     fclose($id_file);
                     }
                 }
             }
             if(isset($_POST['aff'])) {
-                if($id_file=fopen("livre2.txt","r")) {
+                if($id_file=fopen("livre.txt","a+")) {
                     echo "<table border=\"2\">";
                     $i=0;
-                    while($tab=fgetcsv($id_file,200,":") ) {
-                        $tab5[$i]=$tab;
-                        $i++;
+                    while(true) {
+                        if(fgets($id_file) == ""){
+                            break;
+                        }else{
+                            $i++;
+                            $tab0 = explode(":",fgets($id_file));
+                            $tab[$i] = $tab0; 
+
+                        }  
                     }
-                    $tab5=array_reverse($tab5);
+                    $tab=array_reverse($tab);
                     echo "<hr />";
-                    for($i=0;$i<5;$i++) {
-                        echo "<tr> <td>",$i+1 ,": de: ".$tab5[$i][0]." </td> <td> ".$tab5[$i][1]." \" > ".$tab5[$i][1]."</td><td>le: ",date("d/m/y H:i:s", $tab5[$i][2])," </td></tr>";
-                        echo "<tr> <td>", stripslashes($tab5[$i][3]),"</td> </tr> ";
+                    for($i=0;$i < 5;$i++) {
+                        echo "<tr> <td>",$i+1 ,": de: ".$tab[$i][0]." </td><td>le: ",date("d/m/y H:i:s", $tab[$i][2])," </td></tr>";
+                        echo "<tr> <td> " . $tab[$i][1] . "</td></tr> ";
                     }
                     fclose($id_file);
                 }
