@@ -46,8 +46,8 @@
                     $tab=array_reverse($tab);
                     echo "<hr />";
                     for($i=0;$i < 5;$i++) {
-                        echo "<tr> <td>",$i+1 ,": de: ".$tab[$i][0]." </td><td>le: ",date("d/m/y H:i:s", $tab[$i][2])," </td></tr>";
-                        echo "<tr> <td> " . $tab[$i][1] . "</td></tr> ";
+                        echo "<tr> <td>",$i+1 ,": de: ".$tab[$i][0]." </td><td> " . $tab[$i][1] . "</td><td>le: ",date("d/m/y H:i:s", $tab[$i][2])," </td></tr>";
+                        echo "<tr> <td> " . $tab[$i][3] . "</td></tr> ";
                     }
                     fclose($id_file);
                 }
