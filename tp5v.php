@@ -30,17 +30,16 @@
                 }
             }
             if(isset($_POST['aff'])) {
-                if($id_file=fopen("livre.txt","a+")) {
+                if($id_file=fopen("livre.txt","r")) {
                     echo "<table border=\"2\">";
                     $i=0;
                     while(true) {
                         if(fgets($id_file) == ""){
                             break;
                         }else{
-                            $i++;
                             $tab0 = explode(":",fgets($id_file));
                             $tab[$i] = $tab0; 
-
+                            $i++;
                         }  
                     }
                     $tab=array_reverse($tab);
